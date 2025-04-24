@@ -52,37 +52,7 @@ Each viewpoint is used to address specific stakeholder concerns. Views conformin
 
 ## 1.6 Sample Figures & Tables
 
-**Figure 1**: Sample Context Diagram  
-![ContextDiagram](./images/ContextDiagram.png)
-
-<details>
-<summary>PlantUML</summary>
-
-```plantuml
-@startuml
-actor TeamMember
-actor Admin
-
-rectangle "Collaborative Work System" {
-  TeamMember --> (Video Conferencing)
-  TeamMember --> (Whiteboard)
-  TeamMember --> (File Sharing)
-  Admin --> (System Configuration)
-}
-@enduml
-```
-
-</details>
-
-Table 1: Stakeholders and Relevant Viewpoints
-
-| Stakeholder        | Relevant Viewpoints     |
-| ------------------ | ----------------------- |
-| Users              | Component-and-Connector |
-| Developers         | Module, Allocation      |
-| System Admins      | Allocation              |
-| Security Engineers | Component-and-Connector |
-| Project Managers   | Allocation, Module      |
+(nothing to show here?)
 
 # 2. System Overview
 
@@ -334,18 +304,15 @@ Each view contains a primary presentation, context diagram, element catalog, and
 
 ## 4.1 Module View
 
-### 4.1.1 View Description
+#### 4.1.1 View Description
 
 The module view shows how the system is decomposed into high-level functional modules. This includes the Client Tier, Application Tier, and Infrastructure Tier, with each module encapsulating specific responsibilities such as user interaction, business logic, and system-wide services.
 
-### 4.1.2 Architecture Background
-
 This decomposition follows a layered architectural style, supporting modularity, separation of concerns, and maintainability. The design uses Microservices and Client-Server patterns.
 
-### 4.1.3 View Packets
+#### 4.1.2 Primary Presentation
 
-#### 4.1.3.1 Primary Presentation
-
+**NOTE: Rough draft of the section. Need to update.**
 ![ArchPrimaryPresentation](./images/ArchPrimaryPresentation.png)
 
 <details>
@@ -374,11 +341,13 @@ package "Infrastructure Tier" {
 
 </details>
 
-#### 4.1.3.2 Context Diagram
+#### 4.1.3 Context Diagram
+
+**NOTE: Rough draft of the section. Need to update.**
 
 > All modules interact to deliver a seamless user experience, communicating through defined interfaces.
 
-#### 4.1.3.3 Element Catalog
+#### 4.1.4 Element Catalog
 
 - **Elements**: Modules defined per tier
 - **Relations**: Dependencies among modules; data and service flow
@@ -386,23 +355,19 @@ package "Infrastructure Tier" {
 - **Behavior**: Each module manages its own lifecycle and interfaces
 - **Constraints**: Loose coupling and high cohesion
 
-#### 4.1.3.4 Architecture Background
+#### 4.1.5 Architecture Background
 
 The modular approach facilitates independent development, testing, and scaling of features (e.g., adding chat to the collaboration module).
 
 ## 4.2 Component-and-Connector View
 
-### 4.2.1 View Description
+#### 4.2.1 View Description
 
 This view models runtime interactions between components, such as joining a call, sharing files, or drawing on a whiteboard. Components communicate via REST, WebSocket, and message queues.
 
-### 4.2.2 Architecture Background
-
 Design uses Publish-Subscribe and Proxy patterns for real-time responsiveness and security. Performance and availability are emphasized through load balancing and fault tolerance.
 
-### 4.2.3 View Packets
-
-#### 4.2.3.1 Primary Presentation
+#### 4.2.2 Primary Presentation
 
 ![ComponentConnectorView](./images/ComponentConnectorView.png)
 
@@ -423,11 +388,13 @@ User -> "UI Module": Join Call
 
 </details>
 
-#### 4.2.3.2 Context Diagram
+#### 4.2.3 Context Diagram
+
+**NOTE: Rough draft of the section. Need to update.**
 
 > Focuses on runtime interactions across network layers.
 
-#### 4.2.3.3 Element Catalog
+#### 4.2.4 Element Catalog
 
 - **Elements**: UI Module, Services, Load Balancer
 - **Relations**: API calls, WebSocket streams, pub-sub messaging
@@ -435,23 +402,21 @@ User -> "UI Module": Join Call
 - **Behavior**: State caching, real-time sync, authentication
 - **Constraints**: Resilience to network failures
 
-#### 4.2.3.4 Architecture Background
+#### 4.2.5 Architecture Background
 
 Microservices allow independent failure handling and reusability. Load balancers and state managers ensure performance and reliability.
 
 ## 4.3 Allocation View
 
-### 4.3.1 View Description
+#### 4.3.1 View Description
 
 Maps software units to execution environments (servers, containers), storage systems, and developer responsibilities.
 
-### 4.3.2 Architecture Background
-
 Uses containerization and a CI/CD deployment pipeline with a **blue-green strategy** for continuous updates with zero downtime.
 
-### 4.3.3 View Packets
+#### 4.3.2 Primary Presentation
 
-#### 4.3.3.1 Primary Presentation
+**NOTE: Rough draft of the section. Need to update.**
 
 ![AllocatorView](./images/AllocatorView.png)
 
@@ -475,11 +440,13 @@ node "CI/CD Pipeline" {
 
 </details>
 
-#### 4.3.3.2 Context Diagram
+#### 4.3.3 Context Diagram
+
+**NOTE: Rough draft of the section. Need to update.**
 
 > Shows live and staging environments, auto-deployment flow, and containerized services.
 
-#### 4.3.3.3 Element Catalog
+#### 4.3.4 Element Catalog
 
 - **Elements**: Docker containers, deployment servers, CI/CD agents
 - **Relations**: Assigned-to, executes-on
@@ -487,7 +454,7 @@ node "CI/CD Pipeline" {
 - **Behavior**: Blue-green deployment, rollback, health checks
 - **Constraints**: Zero-downtime updates, cost constraints
 
-#### 4.3.3.4 Architecture Background
+#### 4.3.5 Architecture Background
 
 CI/CD practices increase modifiability. Blue-green deployments reduce availability risk during updates. Containers offer platform independence.
 
@@ -536,8 +503,6 @@ Below is a summary of how elements in one view map to elements in another:
 This mapping ensures cohesion among views and helps validate that all architectural decisions support business and quality attribute goals in a traceable and consistent manner.
 
 # 6. Rationale
-
-## Overview
 
 The architectural decisions made throughout the design of the Internet-Based Collaborative Work Environment were driven by a combination of high-priority quality attribute scenarios, technical and environmental constraints, and stakeholder needs. This section provides a summary of why certain architectural patterns, tactics, and structures were chosen and how they collectively support the business and engineering goals.
 
@@ -601,6 +566,6 @@ The architectural decisions made throughout the design of the Internet-Based Col
 | Modifiability vs. Security   | Enforced plugin scope and used proxy-based security to manage risks in dynamic module loading                       |
 | Availability vs. Cost        | Opted for auto-scaling and resource optimization in Blue-Green environments to contain infrastructure cost          |
 
-## Final Justification
+## Conclusion
 
 The resulting architecture aligns with the company’s mission to enable seamless, secure, and flexible collaboration across teams worldwide. By grounding each decision in quality attributes and using iterative ADD design, the architecture balances short-term deliverability with long-term system resilience and extensibility.
