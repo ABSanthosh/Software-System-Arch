@@ -342,6 +342,35 @@ package "Infrastructure Tier" {
 </details>
 
 #### 4.1.3 Context Diagram
+![ModuleContext](https://github.com/user-attachments/assets/e4b2e492-91cc-4393-9959-995ff5f2879b)
+
+<details>
+<summary>PlantUML</summary>
+
+```plantuml
+@startuml
+actor "Team Member" as User
+actor "System Administrator" as Admin
+rectangle System {
+  [User Interface Module]
+  [Collaboration Services]
+  [File Services]
+}
+
+database "Cloud Storage Provider" as Cloud
+rectangle "External Identity Provider" as Identity
+
+User --> [User Interface Module]
+User --> [Collaboration Services]
+User --> [File Services]
+Admin --> [Collaboration Services]
+[Collaboration Services] --> Cloud
+[File Services] --> Cloud
+[User Interface Module] --> Identity
+@enduml
+```
+
+</details>
 
 **NOTE: Rough draft of the section. Need to update.**
 
@@ -390,7 +419,36 @@ User -> "UI Module": Join Call
 
 #### 4.2.3 Context Diagram
 
-**NOTE: Rough draft of the section. Need to update.**
+![CCContext](https://github.com/user-attachments/assets/39ade42f-7237-4f22-bffb-b1680e7ccfbe)
+
+<details>
+<summary>PlantUML</summary>
+
+```plantuml
+@startuml
+actor User
+database "Cloud Storage" as Storage
+
+rectangle System {
+  [Collaboration Service]
+  [File Service]
+  [Video Conferencing Service]
+  rectangle "Pub-Sub / Pub-RTC" as PubSub
+  rectangle "Authentication Service" as Auth
+}
+
+User --> [Collaboration Service]
+User --> [File Service]
+User --> [Video Conferencing Service]
+[Collaboration Service] --> PubSub
+[File Service] --> PubSub
+[Video Conferencing Service] --> PubSub
+PubSub --> Auth
+PubSub --> Storage : REST
+@enduml
+```
+
+</details>
 
 > Focuses on runtime interactions across network layers.
 
@@ -441,8 +499,34 @@ node "CI/CD Pipeline" {
 </details>
 
 #### 4.3.3 Context Diagram
+![AllocationContext](https://github.com/user-attachments/assets/79eb65e2-8405-4cda-baf1-75fb2938f4cb)
 
-**NOTE: Rough draft of the section. Need to update.**
+
+<details>
+<summary>PlantUML</summary>
+
+```plantuml
+@startuml
+actor User
+
+rectangle "Environments" {
+  [Staging Cluster]
+  [Production Cluster]
+  [Object Storage]
+  [Monitoring System]
+}
+
+rectangle "CI/CD Pipeline" as Pipeline
+
+User --> [Staging Cluster] : REST/API
+Pipeline --> [Staging Cluster] : Deploy
+Pipeline --> [Production Cluster] : Deploy
+[Production Cluster] --> [Object Storage]
+[Production Cluster] --> [Monitoring System]
+@enduml
+```
+
+</details>
 
 > Shows live and staging environments, auto-deployment flow, and containerized services.
 
